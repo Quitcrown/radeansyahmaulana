@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Akun - Gachapass</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            padding-top: 80px;
+        }
+        .register-card {
+            background: #262626;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .form-control {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        .form-control:focus {
+            background-color: #333;
+            color: #fff;
+            border-color: #f1c40f;
+            box-shadow: none;
+        }
+        .btn-custom {
+            background-color: #f1c40f;
+            color: #111;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background-color: #f39c12;
+            color: #111;
+        }
+        a { color: #f1c40f; }
+        a:hover { color: #f39c12; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 mx-auto register-card">
+            <h3 class="text-center mb-4">Buat Akun Gachapass</h3>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regUsername">Username :</label>
+                    <input type="text" id="regUsername" class="form-control" placeholder="Masukkan username baru..." required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password :</label>
+                    <input type="password" id="regPassword" class="form-control" placeholder="Masukkan password..." required>
+                </div>
+                <button type="submit" class="btn btn-custom btn-block mt-4">Daftar Sekarang</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <p class="small text-muted">Sudah punya akun? <a href="index.html">Login di sini</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const usernameInput = document.getElementById("regUsername").value.trim();
+        const passwordInput = document.getElementById("regPassword").value;
+
+        if (usernameInput.toLowerCase() === "admin") {
+            alert("Maaf, username 'admin' tidak boleh digunakan!");
+            return;
+        }
+
+        let daftarUser = JSON.parse(localStorage.getItem("daftarUser")) || [];
+        const userSudahAda = daftarUser.find(user => user.username.toLowerCase() === usernameInput.toLowerCase());
+
+        if (userSudahAda) {
+            alert("Username ini sudah terpakai! Silakan gunakan nama lain.");
+        } else {
+            daftarUser.push({
+                username: usernameInput,
+                password: passwordInput
+            });
+
+            localStorage.setItem("daftarUser", JSON.stringify(daftarUser));
+            alert("Pendaftaran Berhasil! Silakan login.");
+            window.location.href = "index.html";
+        }
+    });
+</script>
+
+</body>
+</html>
