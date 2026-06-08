@@ -34,3 +34,25 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 } 
    
 });
+
+function handleLogin() {
+    const emailInput = document.getElementById("loginEmail").value.trim();
+    const passwordInput = document.getElementById("loginPassword").value;
+
+    if (emailInput === "admin" && passwordInput === "admin123") {
+        localStorage.setItem("username", "admin");
+        window.location.href = "../admin/";
+        return;
+    }
+
+    let daftarUser = JSON.parse(localStorage.getItem("daftarUser")) || [];
+    const userCocok = daftarUser.find(user => user.username === emailInput && user.password === passwordInput);
+
+    if (userCocok) {
+        alert("Login Sukses!");
+        localStorage.setItem("username", emailInput);
+        window.location.href = "../index.html";
+    } else {
+        alert("Username atau Password salah/belum terdaftar!");
+    }
+}
